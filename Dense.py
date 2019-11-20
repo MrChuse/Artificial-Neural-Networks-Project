@@ -2,7 +2,7 @@ import numpy as np
 
 class Dense:
     x = None
-    
+
     def __init__(self, num1, num2, learning_rate=0.01, bias=True):
         self.mt = 2/num1 * np.random.randn(num1, num2) # new weights according to Andrew Ng
         self.bias = 2/num1 * np.random.randn(1, num2)
@@ -15,13 +15,14 @@ class Dense:
             print(t, 'dense')
         return t
 
-    def backward(self, loss, bias=True):
-        #print(loss, 'dense bw')
-        l = np.matmul(self.x.reshape(-1, 1), loss.reshape(1, -1))
-        self.mt -= l * self.lr
+    def backward(self, dz, bias=True):
+        dWeights = np.outer(self.x, dz)
+        dx = np.matmul(dz, self.mt.T)
+        self.mt -= dWeights * self.lr
+
         if bias:
-            self.bias -= loss * self.lr
-        return np.sum(l, axis=1)
+            self.bias -= dz * self.lr
+        return dx
 
 if __name__ == '__main__':
     b = Dense(3, 5)
