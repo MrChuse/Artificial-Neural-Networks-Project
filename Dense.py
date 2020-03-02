@@ -4,7 +4,7 @@ class Dense:
 
     def __init__(self, num1, num2, learning_rate=0.01, bias=True):
         self.mt = 2/num1 * np.random.randn(num1, num2) # new weights according to Andrew Ng
-        self.bias = np.random.zeros(1, num2)
+        self.bias = np.zeros(1, num2)
         self.lr = learning_rate
 
     def forward(self, data, bias=True, prnt=False):
